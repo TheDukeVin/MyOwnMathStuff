@@ -4,7 +4,7 @@ import pygame,sys
 from pygame.locals import *
 pygame.init()
 
-windS = 600
+windS = 400
 Max = 100
 
 name = 'Mandlebrot Set'
@@ -48,12 +48,32 @@ def main():
     global window
     window = pygame.display.set_mode((windS,windS))
     pygame.display.set_caption(name)
-    draw(-2,-2,1/4)
+    cornerx = -2
+    cornery = -2
+    zoom = 1/4
+    drawn = False
     while True:
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
+            elif event.type == MOUSEBUTTONDOWN:
+                mousex,mousey = event.pos
+                if 0<mousex<windS/2:
+                    xshift = 0
+                else:
+                    xshift = 1
+                if 0<mousey<windS/2:
+                    yshift = 0
+                else:
+                    yshift = 1
+                zoom*=2
+                cornerx+=xshift/zoom
+                cornery+=yshift/zoom
+                drawn = False
+        if drawn == False:
+            draw(cornerx,cornery,zoom)
+            drawn = True
         pygame.display.update()
 
 if __name__ == "__main__":
