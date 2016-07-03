@@ -12,6 +12,7 @@ name = 'Mandlebrot Set'
 def P(a,b,ca,cb):
     return (a**2-b**2+ca,2*a*b+cb)
 
+
 def color(steps):
     if steps == -1:
         return (0,0,0)
@@ -59,14 +60,8 @@ def main():
                 sys.exit()
             elif event.type == MOUSEBUTTONDOWN:
                 mousex,mousey = event.pos
-                if 0<mousex<windS/2:
-                    xshift = 0
-                else:
-                    xshift = 1
-                if 0<mousey<windS/2:
-                    yshift = 0
-                else:
-                    yshift = 1
+                xshift = mousex*2/windS-1/2
+                yshift = mousey*2/windS-1/2
                 zoom*=2
                 cornerx+=xshift/zoom
                 cornery+=yshift/zoom
